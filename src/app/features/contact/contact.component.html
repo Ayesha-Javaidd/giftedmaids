@@ -1,4 +1,4 @@
-<section class="font-poppins mt-12">
+<!-- <section class="font-poppins mt-12">
   <div class="text-center py-16 bg-gray-50">
     <h1 class="text-4xl font-bold text-gray-900">Contact Us</h1>
     <p class="mt-8 text-gray-600 max-w-xl mx-auto">
@@ -6,11 +6,9 @@
     </p>
   </div>
 
-  <!-- Contact Details + Form -->
   <div
     class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 py-16 px-6"
   >
-    <!-- LEFT: Contact Info -->
     <div class="space-y-8">
       <div class="flex items-start space-x-4">
         <div class="p-3 bg-gray-600 rounded-full text-white">
@@ -85,7 +83,6 @@
       </div>
     </div>
 
-    <!-- RIGHT: Form -->
     <form
       class="space-y-5 bg-white shadow-lg p-8 rounded-xl border border-gray-200"
     >
@@ -114,11 +111,137 @@
     </form>
   </div>
 
-  <!-- CTA -->
   <div class="text-center py-14 bg-white text-black">
     <a
       routerLink="/book"
       class="text-lg bg-gray-600 text-white cursor-pointer font-semibold border border-black px-8 py-3 rounded-lg hover:bg-gray-200 hover:text-black transition-all"
+    >
+      Book a Cleaning Service
+    </a>
+  </div>
+</section> -->
+
+<section class="font-poppins mt-16 bg-black text-yellow-50">
+  <div class="text-center py-16">
+    <h1 class="text-4xl font-bold text-yellow-500">Contact Us</h1>
+    <p class="mt-8 text-yellow-50 max-w-xl mx-auto">
+      Have questions or ready to schedule your cleaning? We're here to help!
+    </p>
+  </div>
+
+  <!-- Contact Details + Form -->
+  <div
+    class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 py-16 px-6"
+  >
+    <!-- LEFT: Contact Info -->
+    <div class="space-y-8">
+      <div class="flex items-start space-x-4">
+        <div class="p-3 bg-yellow-500 rounded-full text-black">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.25 4.5l3 2.25 3-2.25v15l-3-2.25-3 2.25v-15z"
+            />
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg text-yellow-500">Call</h3>
+          <p class="text-yellow-50">508-280-9008</p>
+        </div>
+      </div>
+
+      <div class="flex items-start space-x-4">
+        <div class="p-3 bg-yellow-500 rounded-full text-black">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.375 4.5h17.25M4.5 6.75v10.5a2.25 2.25 0 002.25 2.25h10.5a2.25 2.25 0 002.25-2.25V6.75m-15 0l6.75 4.5 6.75-4.5"
+            />
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg text-yellow-500">Email</h3>
+          <p class="text-yellow-50">{{ "Support@giftedmaidsct.com" }}</p>
+        </div>
+      </div>
+
+      <div class="flex items-start space-x-4">
+        <div class="p-3 bg-yellow-500 rounded-full text-black">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 2.25c-4.556 0-8.25 3.577-8.25 8 0 5.054 8.25 11.5 8.25 11.5s8.25-6.446 8.25-11.5c0-4.423-3.694-8-8.25-8z"
+            />
+            <circle cx="12" cy="10.5" r="2.25" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg text-yellow-500">Address</h3>
+          <p class="text-yellow-50">
+            2389 Main St. STE 100 Glastonbury CT 06033
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Form -->
+    <form
+      class="space-y-5 bg-yellow-100 shadow-lg p-8 rounded-xl border border-yellow-500"
+    >
+      <input
+        type="text"
+        placeholder="Your Name"
+        class="w-full p-3 rounded-md border border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none bg-yellow-50 text-black"
+      />
+      <input
+        type="email"
+        placeholder="Your Email"
+        class="w-full p-3 rounded-md border border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none bg-yellow-50 text-black"
+      />
+      <textarea
+        rows="4"
+        placeholder="Your Message"
+        class="w-full p-3 rounded-md border border-yellow-500 focus:ring-2 outline-none bg-yellow-50 text-black"
+      ></textarea>
+
+      <button
+        type="submit"
+        class="w-full bg-black border border-yellow-500 cursor-pointer text-yellow-50 py-3 rounded-md font-semibold transition-all shadow-md hover:bg-gray-600 hover:text-white"
+      >
+        Send Message
+      </button>
+    </form>
+  </div>
+
+  <!-- CTA -->
+  <div class="text-center py-14 bg-black">
+    <a
+      routerLink="/book"
+      class="text-lg bg-yellow-100 text-black cursor-pointer font-semibold border border-yellow-500 px-8 py-3 rounded-lg hover:bg-yellow-50 hover:text-black transition-all"
     >
       Book a Cleaning Service
     </a>

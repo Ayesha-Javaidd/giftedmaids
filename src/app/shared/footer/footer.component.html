@@ -1,8 +1,8 @@
-<footer class="w-full border-t py-12 bg-black text-gray-800 mt-8 font-poppins">
+<footer class="w-full py-12 bg-black text-gray-800 font-poppins">
   <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
     <div class="flex items-center gap-3">
       <img [src]="logoPreview" alt="System Logo" class="w-28" />
-      <span class="font-semibold text-white text-xl">{{ brand.name }}</span>
+      <span class="font-semibold text-yellow-50 text-xl">{{ brand.name }}</span>
     </div>
 
     <div>
@@ -10,7 +10,7 @@
         <li *ngFor="let link of menuLinks">
           <a
             [routerLink]="link.path"
-            class="text-gray-300 hover:text-white transition-colors duration-300"
+            class="text-yellow-50 hover:text-white transition-colors duration-300"
           >
             {{ link.label }}
           </a>
@@ -19,7 +19,7 @@
     </div>
 
     <div class="space-y-3 text-sm">
-      <div class="flex items-center gap-2 text-white">
+      <div class="flex items-center gap-2 text-yellow-50">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-5 w-5"
@@ -37,7 +37,7 @@
         <span>{{ phone }}</span>
       </div>
 
-      <div class="flex items-center gap-2 text-white">
+      <div class="flex items-center gap-2 text-yellow-50">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-5 w-5"
@@ -57,7 +57,7 @@
     </div>
   </div>
 
-  <div class="text-center text-xs text-white mt-10">
+  <div class="text-center text-xs text-yellow-50 mt-10">
     © 2024 {{ brand.name }}. All rights reserved.
   </div>
 </footer>
