@@ -1,0 +1,35 @@
+/* Start hidden */
+.fade-up-section {
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+/* Animate when in view */
+.fade-up-section.in-view {
+    animation: fallBounce 0.9s ease-out forwards;
+}
+
+/* Falling + bounce animation */
+@keyframes fallBounce {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateY(-10px);
+        /* overshoot */
+    }
+
+    80% {
+        transform: translateY(5px);
+        /* bounce back */
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        /* final position */
+    }
+}

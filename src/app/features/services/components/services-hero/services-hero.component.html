@@ -1,0 +1,22 @@
+<section class="py-16 mt-12 bg-white font-poppins text-center">
+  <h2 class="text-4xl font-bold tracking-wide mb-6">Our Services</h2>
+
+  <p class="max-w-3xl mx-auto text-gray-600 mb-12 text-sm leading-relaxed">
+    This is your Services Page. It's a great opportunity to provide information
+    about the services you offer. You can edit this section to highlight the
+    benefits of each service, what it includes, and why customers should choose
+    your agency.
+  </p>
+
+  <div
+    class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-16"
+  >
+    <div
+      *ngFor="let service of services"
+      class="p-6 border rounded-lg shadow-sm hover:shadow-md transition"
+    >
+      <h3 class="text-lg font-semibold mb-2">{{ service.title }}</h3>
+      <p class="text-sm text-gray-600">{{ service.description }}</p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,158 @@
+<section class="min-h-screen bg-white font-poppins py-24">
+  <div class="max-w-3xl mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center mb-8 mt-4">Book Your Cleaning</h2>
+
+    <!-- <div *ngIf="errorMessage" class="bg-red-100 text-red-700 p-3 rounded mb-4">
+      {{ errorMessage }}
+    </div>
+    <div
+      *ngIf="successMessage"
+      class="bg-green-100 text-green-700 p-3 rounded mb-4"
+    >
+      {{ successMessage }}
+    </div> -->
+
+    <!-- Packages -->
+    <h3 class="font-semibold text-lg mb-3">Select a Package</h3>
+    <div class="space-y-3 mb-6">
+      <label
+        *ngFor="let pkg of packages"
+        class="block border rounded-lg p-4 cursor-pointer hover:shadow-md transition"
+      >
+        <input
+          type="radio"
+          name="package"
+          [value]="pkg.name"
+          [(ngModel)]="selectedPackage"
+          class="mr-2"
+        />
+        <strong>{{ pkg.name }}</strong> —
+        <span class="text-gray-600">${{ pkg.price }}</span>
+        <div class="text-sm text-gray-500 mt-1">{{ pkg.description }}</div>
+
+        <!-- Add-ons for selected package -->
+        <div
+          *ngIf="selectedPackage === pkg.name && pkg.addOns?.length"
+          class="mt-2"
+        >
+          <h4 class="font-semibold text-gray-700 text-sm mb-1">
+            Optional Add-ons:
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <label
+              *ngFor="let add of pkg.addOns"
+              class="flex items-center border rounded-lg p-2 hover:shadow-md cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                [checked]="selectedAddOns.includes(add.name)"
+                (change)="toggleAddOn(add.name)"
+                class="mr-2"
+              />
+              <span>{{ add.name }} — ${{ add.price }}</span>
+            </label>
+          </div>
+        </div>
+      </label>
+    </div>
+
+    <!-- Date & Time -->
+    <h3 class="font-semibold text-lg mb-3">Choose Date & Time</h3>
+    <div class="flex gap-4 mb-1">
+      <div class="w-1/2">
+        <input
+          type="date"
+          [(ngModel)]="selectedDate"
+          class="border p-2 rounded w-full"
+        />
+        <p *ngIf="showDateError" class="text-red-600 text-sm mt-1">
+          Please select a valid date.
+        </p>
+      </div>
+      <div class="w-1/2">
+        <input
+          type="time"
+          [(ngModel)]="selectedTime"
+          class="border p-2 rounded w-full"
+        />
+        <p *ngIf="showTimeError" class="text-red-600 text-sm mt-1">
+          Please select a booking time.
+        </p>
+      </div>
+    </div>
+
+    <!-- Location -->
+    <h3 class="font-semibold text-lg mb-3 mt-4">Select Location</h3>
+    <div class="flex gap-2 mb-3">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        placeholder="Search for an area or address..."
+        class="border p-2 rounded flex-1"
+      />
+      <button
+        (click)="searchLocation()"
+        class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition"
+      >
+        Search
+      </button>
+    </div>
+    <div id="map" class="w-full h-64 rounded-lg mb-3 border"></div>
+    <input
+      type="text"
+      [(ngModel)]="address"
+      placeholder="Selected address will appear here"
+      readonly
+      class="w-full border p-2 rounded mb-6"
+    />
+
+    <!-- Instructions -->
+    <h3 class="font-semibold text-lg mb-3">Special Instructions</h3>
+    <textarea
+      [(ngModel)]="instructions"
+      rows="3"
+      placeholder="e.g. Key is under the mat..."
+      class="w-full border p-3 rounded mb-6 resize-none"
+    ></textarea>
+
+    <!-- Selected Details & Total -->
+    <div *ngIf="selectedPackage" class="mb-6 p-4 border rounded-lg bg-gray-50">
+      <h4 class="font-semibold text-gray-700 mb-2">Selected Details:</h4>
+      <p>
+        <strong>Package:</strong> {{ selectedPackage }} — ${{
+          selectedPackageDetails?.price
+        }}
+      </p>
+      <div *ngIf="selectedAddOns.length">
+        <strong>Add-ons:</strong>
+        <ul class="ml-4 list-disc">
+          <li *ngFor="let add of selectedAddOns">
+            {{ add }} — ${{ getAddOnPrice(add) }}
+          </li>
+        </ul>
+      </div>
+      <p class="mt-2 font-semibold">Total: ${{ totalPrice }}</p>
+    </div>
+
+    <!-- Submit -->
+    <button
+      (click)="submitBooking()"
+      class="w-full cursor-pointer bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition"
+    >
+      Submit Booking
+    </button>
+
+    <div
+      *ngIf="errorMessage"
+      class="bg-red-100 mb-6 mt-6 rounded-lg text-red-700 p-3 rounded mb-4"
+    >
+      {{ errorMessage }}
+    </div>
+    <div
+      *ngIf="successMessage"
+      class="bg-green-100 mb-6 mt-6 rounded-lg text-green-700 p-3 rounded mb-4"
+    >
+      {{ successMessage }}
+    </div>
+  </div>
+</section>

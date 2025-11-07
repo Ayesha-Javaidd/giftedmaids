@@ -1,0 +1,62 @@
+.hero-pattern {
+    background-image: url("https://www.transparenttextures.com/patterns/dark-matter.png");
+}
+
+/* --- Fade & slide-in keyframes --- */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes bounceOnce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/* --- Reusable animation utility classes --- */
+.fade-in {
+    animation: fadeIn 1s ease-out forwards;
+}
+
+.fade-in-up {
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+.fade-in-delay {
+    animation: fadeIn 1.5s ease-out 0.3s forwards;
+}
+
+.bounce-once {
+    animation: bounceOnce 1s ease-in-out;
+}
+
+/* Optional: ensure hidden elements don't flash before animating */
+.fade-in,
+.fade-in-up,
+.fade-in-delay {
+    opacity: 0;
+}

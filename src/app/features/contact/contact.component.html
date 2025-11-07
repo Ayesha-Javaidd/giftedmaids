@@ -1,0 +1,126 @@
+<section class="font-poppins mt-12">
+  <div class="text-center py-16 bg-gray-50">
+    <h1 class="text-4xl font-bold text-gray-900">Contact Us</h1>
+    <p class="mt-8 text-gray-600 max-w-xl mx-auto">
+      Have questions or ready to schedule your cleaning? We're here to help!
+    </p>
+  </div>
+
+  <!-- Contact Details + Form -->
+  <div
+    class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 py-16 px-6"
+  >
+    <!-- LEFT: Contact Info -->
+    <div class="space-y-8">
+      <div class="flex items-start space-x-4">
+        <div class="p-3 bg-gray-600 rounded-full text-white">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.25 4.5l3 2.25 3-2.25v15l-3-2.25-3 2.25v-15z"
+            />
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg">Call</h3>
+          <p class="text-gray-600">508-280-9008</p>
+        </div>
+      </div>
+
+      <div class="flex items-start space-x-4">
+        <div class="p-3 bg-gray-600 rounded-full text-white">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.375 4.5h17.25M4.5 6.75v10.5a2.25 2.25 0 002.25 2.25h10.5a2.25 2.25 0 002.25-2.25V6.75m-15 0l6.75 4.5 6.75-4.5"
+            />
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg">Email</h3>
+          <p class="text-gray-600">{{ "Support@giftedmaidsct.com" }}</p>
+        </div>
+      </div>
+
+      <div class="flex items-start space-x-4">
+        <div class="p-3 bg-gray-600 rounded-full text-white">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 2.25c-4.556 0-8.25 3.577-8.25 8 0 5.054 8.25 11.5 8.25 11.5s8.25-6.446 8.25-11.5c0-4.423-3.694-8-8.25-8z"
+            />
+            <circle cx="12" cy="10.5" r="2.25" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg">Address</h3>
+          <p class="text-gray-600">
+            2389 Main St. STE 100 Glastonbury CT 06033
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Form -->
+    <form
+      class="space-y-5 bg-white shadow-lg p-8 rounded-xl border border-gray-200"
+    >
+      <input
+        type="text"
+        placeholder="Your Name"
+        class="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-green-600 outline-none"
+      />
+      <input
+        type="email"
+        placeholder="Your Email"
+        class="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-green-600 outline-none"
+      />
+      <textarea
+        rows="4"
+        placeholder="Your Message"
+        class="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-green-600 outline-none"
+      ></textarea>
+
+      <button
+        type="submit"
+        class="w-full bg-gray-600 border border-black cursor-pointer text-white py-3 rounded-md font-semibold transition-all shadow-md hover:bg-gray-200 hover:text-black transition-all"
+      >
+        Send Message
+      </button>
+    </form>
+  </div>
+
+  <!-- CTA -->
+  <div class="text-center py-14 bg-white text-black">
+    <a
+      routerLink="/book"
+      class="text-lg bg-gray-600 text-white cursor-pointer font-semibold border border-black px-8 py-3 rounded-lg hover:bg-gray-200 hover:text-black transition-all"
+    >
+      Book a Cleaning Service
+    </a>
+  </div>
+</section>

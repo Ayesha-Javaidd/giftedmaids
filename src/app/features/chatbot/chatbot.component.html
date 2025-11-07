@@ -1,0 +1,71 @@
+<!-- Floating Chat Button (when minimized) -->
+<button
+  *ngIf="isMinimized"
+  (click)="toggleChat()"
+  class="fixed bottom-6 right-6 bg-black text-white p-4 rounded-full shadow-lg hover:bg-gray-800 transition-all duration-300 flex items-center justify-center text-2xl cursor-pointer"
+  aria-label="Open chat"
+>
+  💬
+</button>
+
+<!-- Chat Window (when open) -->
+<div
+  *ngIf="!isMinimized"
+  class="fixed bottom-6 right-6 w-80 max-w-full bg-white shadow-xl border border-gray-300 rounded-lg overflow-hidden flex flex-col"
+>
+  <!-- Header -->
+  <div
+    class="bg-black text-white px-4 py-2 font-semibold flex justify-between items-center"
+  >
+    <span>Chat with us</span>
+
+    <!-- Minimize button -->
+    <button
+      (click)="toggleChat()"
+      class="text-xl hover:text-gray-400 transition cursor-pointer"
+      aria-label="Minimize chat"
+    >
+      ✕
+    </button>
+  </div>
+
+  <!-- Chat Body -->
+  <div class="flex-1 p-4 overflow-y-auto space-y-3 h-64">
+    <div
+      *ngFor="let msg of messages"
+      class="flex"
+      [ngClass]="{
+        'justify-end': msg.sender === 'user',
+        'justify-start': msg.sender === 'bot'
+      }"
+    >
+      <div
+        [ngClass]="{
+          'bg-gray-600 text-white text-xs': msg.sender === 'bot',
+          'bg-gray-200 text-black text-sm': msg.sender === 'user'
+        }"
+        class="px-3 py-2 rounded-lg max-w-xs wrap-break-word"
+      >
+        {{ msg.text }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <form (ngSubmit)="sendMessage()" class="flex border-t border-gray-300">
+    <input
+      [(ngModel)]="userMessage"
+      name="message"
+      type="text"
+      placeholder="Type a message..."
+      class="flex-1 px-3 py-2 text-sm focus:outline-none"
+    />
+    <button
+      type="submit"
+      class="px-4 bg-gray-600 text-white text-sm hover:bg-gray-800 transition cursor-pointer"
+    >
+      Send
+    </button>
+  </form>
+</div>
+

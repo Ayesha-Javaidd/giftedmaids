@@ -1,0 +1,57 @@
+<section class="bg-black text-white py-16 font-poppins">
+  <h2 class="text-center text-3xl font-bold tracking-wide mb-10 fade-up-card">
+    WHY CHOOSE US
+  </h2>
+
+  <div
+    class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-center"
+  >
+    <div
+      *ngFor="let f of features; let i = index"
+      class="space-y-4 px-6 fade-up-card"
+      [style.transitionDelay]="i * 0.2 + 's'"
+    >
+      <div
+        class="w-16 h-16 mb-6 mx-auto flex items-center justify-center rounded-full bg-white/10 border border-white/20"
+      >
+        <ng-container [ngSwitch]="f.icon">
+          <svg
+            *ngSwitchCase="'users'"
+            class="w-8 h-8 text-green-400"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M13 7a3 3 0 11-6 0 3 3 0 ..."></path>
+          </svg>
+          <svg
+            *ngSwitchCase="'settings'"
+            class="w-8 h-8 text-green-400"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 8a4 4 0 ..."></path>
+          </svg>
+          <svg
+            *ngSwitchCase="'sparkles'"
+            class="w-8 h-8 text-green-400"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 3l1.8 4.5L18 9 ..."></path>
+          </svg>
+          <svg
+            *ngSwitchCase="'star'"
+            class="w-8 h-8 text-green-400"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 17.3l-6.18 3.73 ..."></path>
+          </svg>
+        </ng-container>
+      </div>
+
+      <h3 class="font-semibold text-lg">{{ f.title }}</h3>
+      <p class="text-sm text-gray-300 leading-relaxed">{{ f.description }}</p>
+    </div>
+  </div>
+</section>
