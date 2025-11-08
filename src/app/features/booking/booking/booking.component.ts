@@ -196,14 +196,14 @@ export class BookingComponent implements OnInit, AfterViewInit {
     this.showTimeError = false;
     this.showDateError = false;
 
-    if (!this.selectedPackage)
-      return (this.errorMessage = 'Please select a package.'), false;
-
+    if (!this.selectedPackage) {
+      this.errorMessage = 'Please select a package.';
+      return false;
+    }
     if (!this.selectedDate) {
       this.showDateError = true;
       return false;
     }
-
     if (!this.selectedTime) {
       this.showTimeError = true;
       return false;
@@ -213,24 +213,30 @@ export class BookingComponent implements OnInit, AfterViewInit {
       `${this.selectedDate}T${this.selectedTime}`
     );
     const now = new Date();
-    if (selectedDateTime < now)
-      return (
-        (this.errorMessage = 'You cannot select a past date or time.'), false
-      );
+    if (selectedDateTime < now) {
+      this.errorMessage = 'You cannot select a past date or time.';
+      return false;
+    }
 
     const day = selectedDateTime.getDay(); // 0=Sun ... 6=Sat
     const hour = selectedDateTime.getHours();
 
-    if (day === 6)
-      return (this.errorMessage = 'We are closed on Saturdays.'), false;
-    if (day === 5 && (hour < 8 || hour >= 16))
-      return (this.errorMessage = 'Friday hours: 8 AM - 4 PM only.'), false;
-    if (day >= 0 && day <= 4 && (hour < 9 || hour >= 17))
-      return (this.errorMessage = 'Sun-Thu hours: 9 AM - 5 PM only.'), false;
-    if (!this.address)
-      return (
-        (this.errorMessage = 'Please select your location on the map.'), false
-      );
+    if (day === 6) {
+      this.errorMessage = 'We are closed on Saturdays.';
+      return false;
+    }
+    if (day === 5 && (hour < 8 || hour >= 16)) {
+      this.errorMessage = 'Friday hours: 8 AM - 4 PM only.';
+      return false;
+    }
+    if (day >= 0 && day <= 4 && (hour < 9 || hour >= 17)) {
+      this.errorMessage = 'Sun-Thu hours: 9 AM - 5 PM only.';
+      return false;
+    }
+    if (!this.address) {
+      this.errorMessage = 'Please select your location on the map.';
+      return false;
+    }
 
     return true;
   }
@@ -238,7 +244,9 @@ export class BookingComponent implements OnInit, AfterViewInit {
   async submitBooking() {
     if (!this.validateBooking()) return;
 
+    // ✅ Prepare email template parameters
     const templateParams = {
+      to_email: 'codebyhassann@gmail.com', // Gmail recipient
       package: this.selectedPackage,
       addOns: this.selectedAddOns.join(', ') || 'None',
       date: this.selectedDate,
@@ -249,12 +257,14 @@ export class BookingComponent implements OnInit, AfterViewInit {
     };
 
     try {
+      // ✅ Send booking details via EmailJS
       const response = await emailjs.send(
-        environment.emailJS.serviceID,
-        environment.emailJS.templateID,
+        environment.emailJS.serviceID, // Gmail service ID
+        environment.emailJS.templateID, // Template ID from EmailJS
         templateParams,
         environment.emailJS.publicKey
       );
+
       if (response.status === 200) {
         this.successMessage =
           '✅ Booking submitted successfully! Confirmation sent via email.';
