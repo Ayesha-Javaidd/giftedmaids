@@ -5,6 +5,9 @@ import * as L from 'leaflet';
 import emailjs from '@emailjs/browser';
 import { environment } from '../../../../environments/environment';
 
+// ✅ Google API Client Loader
+declare const gapi: any;
+
 @Component({
   selector: 'app-book',
   standalone: true,
@@ -114,6 +117,9 @@ export class BookingComponent implements OnInit, AfterViewInit {
   }
 
   async ngOnInit() {
+    // ✅ Load Google API Client
+    this.loadGoogleApi();
+
     const iconRetinaUrl =
       'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png';
     const iconUrl =
@@ -244,9 +250,8 @@ export class BookingComponent implements OnInit, AfterViewInit {
   async submitBooking() {
     if (!this.validateBooking()) return;
 
-    // ✅ Prepare email template parameters
     const templateParams = {
-      to_email: 'codebyhassann@gmail.com', // Gmail recipient
+      to_email: 'codebyhassann@gmail.com',
       package: this.selectedPackage,
       addOns: this.selectedAddOns.join(', ') || 'None',
       date: this.selectedDate,
@@ -257,22 +262,82 @@ export class BookingComponent implements OnInit, AfterViewInit {
     };
 
     try {
-      // ✅ Send booking details via EmailJS
       const response = await emailjs.send(
-        environment.emailJS.serviceID, // Gmail service ID
-        environment.emailJS.templateID, // Template ID from EmailJS
+        environment.emailJS.serviceID,
+        environment.emailJS.templateID,
         templateParams,
         environment.emailJS.publicKey
       );
 
       if (response.status === 200) {
+        // ✅ Add to Google Calendar
+        await this.addEventToGoogleCalendar();
+
         this.successMessage =
-          '✅ Booking submitted successfully! Confirmation sent via email.';
+          '✅ Booking submitted successfully! Event added to your Google Calendar.';
         this.errorMessage = '';
       }
     } catch (err) {
-      console.error('EmailJS error:', err);
+      console.error('Error:', err);
       this.errorMessage = 'Something went wrong while sending the booking.';
+    }
+  }
+
+  // ✅ Load Google API Client
+  private loadGoogleApi() {
+    const script = document.createElement('script');
+    script.src = 'https://apis.google.com/js/api.js';
+    script.onload = () => {
+      gapi.load('client:auth2', () => {
+        gapi.client
+          .init({
+            apiKey: environment.google.apiKey,
+            clientId: environment.google.clientId,
+            discoveryDocs: [
+              'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
+            ],
+            scope: 'https://www.googleapis.com/auth/calendar.events',
+          })
+          .then(() => console.log('✅ Google API initialized'));
+      });
+    };
+    document.body.appendChild(script);
+  }
+
+  // ✅ Add booking event to Google Calendar
+  private async addEventToGoogleCalendar() {
+    try {
+      const authInstance = gapi.auth2.getAuthInstance();
+      const user = authInstance.currentUser.get();
+      if (!user.isSignedIn()) {
+        await authInstance.signIn();
+      }
+
+      const event = {
+        summary: `Cleaning Booking: ${this.selectedPackage}`,
+        location: this.address,
+        description: `Add-ons: ${
+          this.selectedAddOns.join(', ') || 'None'
+        }\nInstructions: ${this.instructions || 'None'}`,
+        start: {
+          dateTime: `${this.selectedDate}T${this.selectedTime}:00`,
+          timeZone: 'Asia/Karachi',
+        },
+        end: {
+          dateTime: `${this.selectedDate}T${this.selectedTime}:00`,
+          timeZone: 'Asia/Karachi',
+        },
+      };
+
+      await gapi.client.calendar.events.insert({
+        calendarId: 'primary',
+        resource: event,
+      });
+
+      console.log('✅ Event added to Google Calendar');
+    } catch (err) {
+      console.error('Google Calendar error:', err);
+      this.errorMessage = 'Google Calendar integration failed.';
     }
   }
 
