@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 export class ChatbotComponent {
   messages: ChatbotMessage[] = [
     {
-      text: '👋 Hello! How can I help you today?',
+      text: 'Hello! How can I help you today?',
       sender: 'bot',
       timestamp: new Date(),
     },

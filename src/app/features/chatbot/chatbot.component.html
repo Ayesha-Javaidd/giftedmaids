@@ -2,27 +2,27 @@
 <button
   *ngIf="isMinimized"
   (click)="toggleChat()"
-  class="fixed bottom-6 right-6 bg-black text-white p-4 rounded-full shadow-lg hover:bg-gray-800 transition-all duration-300 flex items-center justify-center text-2xl cursor-pointer"
+  class="fixed bottom-6 right-6 bg-black text-yellow-500 p-4 rounded-full shadow-lg hover:bg-yellow-500 hover:text-black transition-all duration-300 flex items-center justify-center text-2xl cursor-pointer"
   aria-label="Open chat"
 >
-  💬
+  <i class="fa-solid fa-comment"></i>
 </button>
 
 <!-- Chat Window (when open) -->
 <div
   *ngIf="!isMinimized"
-  class="fixed bottom-6 right-6 w-80 max-w-full bg-white shadow-xl border border-gray-300 rounded-lg overflow-hidden flex flex-col"
+  class="fixed bottom-6 right-6 w-80 max-w-full bg-black shadow-xl border border-yellow-500 rounded-lg overflow-hidden flex flex-col"
 >
   <!-- Header -->
   <div
-    class="bg-black text-white px-4 py-2 font-semibold flex justify-between items-center"
+    class="bg-black text-yellow-500 px-4 py-2 font-semibold flex justify-between items-center"
   >
-    <span>Chat with us</span>
+    <span><i class="fa-solid fa-comment mr-2"></i> Chat with us</span>
 
     <!-- Minimize button -->
     <button
       (click)="toggleChat()"
-      class="text-xl hover:text-gray-400 transition cursor-pointer"
+      class="text-yellow-50 hover:text-yellow-500 transition cursor-pointer text-lg"
       aria-label="Minimize chat"
     >
       ✕
@@ -41,10 +41,10 @@
     >
       <div
         [ngClass]="{
-          'bg-gray-600 text-white text-xs': msg.sender === 'bot',
-          'bg-gray-200 text-black text-sm': msg.sender === 'user'
+          'bg-yellow-100  text-black text-xs': msg.sender === 'bot',
+          'bg-gray-800 text-yellow-100 text-sm': msg.sender === 'user'
         }"
-        class="px-3 py-2 rounded-lg max-w-xs wrap-break-word"
+        class="px-3 py-2 rounded-lg max-w-xs break-words"
       >
         {{ msg.text }}
       </div>
@@ -52,20 +52,19 @@
   </div>
 
   <!-- Input -->
-  <form (ngSubmit)="sendMessage()" class="flex border-t border-gray-300">
+  <form (ngSubmit)="sendMessage()" class="flex border-t border-yellow-500">
     <input
       [(ngModel)]="userMessage"
       name="message"
       type="text"
       placeholder="Type a message..."
-      class="flex-1 px-3 py-2 text-sm focus:outline-none"
+      class="flex-1 px-3 py-2 text-sm bg-gray-900 text-yellow-50 placeholder-yellow-50 focus:outline-none"
     />
     <button
       type="submit"
-      class="px-4 bg-gray-600 text-white text-sm hover:bg-gray-800 transition cursor-pointer"
+      class="px-4 bg-yellow-500 text-black text-sm hover:bg-yellow-400 transition cursor-pointer"
     >
       Send
     </button>
   </form>
 </div>
-
