@@ -1,3 +1,428 @@
+// import { Component, OnInit, AfterViewInit } from '@angular/core';
+// import { CommonModule } from '@angular/common';
+// import { FormsModule } from '@angular/forms';
+// import * as L from 'leaflet';
+// import emailjs from '@emailjs/browser';
+// import { environment } from '../../../../environments/environment';
+
+// // ✅ Google API Client Loader
+// declare const gapi: any;
+
+// @Component({
+//   selector: 'app-book',
+//   standalone: true,
+//   imports: [CommonModule, FormsModule],
+//   templateUrl: './booking.component.html',
+//   styleUrls: ['./booking.component.css'],
+// })
+// export class BookingComponent implements OnInit, AfterViewInit {
+//   selectedPackage: string | null = null;
+//   selectedAddOns: string[] = [];
+//   instructions = '';
+//   selectedDate = '';
+//   selectedTime = '';
+//   address = '';
+//   lat: number | null = null;
+//   lng: number | null = null;
+//   searchQuery = '';
+//   errorMessage = '';
+//   successMessage = '';
+//   showDateError = false;
+//   showTimeError = false;
+
+//   private map: any;
+//   private marker: any;
+
+//   // ✅ Packages (Updated with Client Data)
+//   packages = [
+//     {
+//       name: 'Cleaning Services',
+//       description:
+//         'Choose between Standard, Deep, or Move-In/Move-Out cleaning types with flexible frequency options.',
+//       types: [
+//         {
+//           type: 'Standard Cleaning',
+//           description:
+//             'Includes dusting, vacuuming, mopping, kitchen and bathroom cleaning, and surface wipe-downs.',
+//           pricing: [
+//             {
+//               homeSize: '1 bed / 1 bath / 1 kitchen / 1 dining',
+//               prices: {
+//                 '1x/month': 189,
+//                 '3x/month': 180,
+//                 'Bi-Weekly': 175,
+//                 '4x/month': 170,
+//               },
+//             },
+//             {
+//               homeSize: '2 bed / 1 bath / 1 kitchen / 1 dining',
+//               prices: {
+//                 '1x/month': 215,
+//                 '3x/month': 208,
+//                 'Bi-Weekly': 201,
+//                 '4x/month': 195,
+//               },
+//             },
+//             {
+//               homeSize: '2 bed / 2 bath / 1 kitchen / 1 dining',
+//               prices: {
+//                 '1x/month': 245,
+//                 '3x/month': 239,
+//                 'Bi-Weekly': 231,
+//                 '4x/month': 225,
+//               },
+//             },
+//             {
+//               homeSize: '3 bed / 2 bath / 1 kitchen / 1 dining',
+//               prices: {
+//                 '1x/month': 280,
+//                 '3x/month': 273,
+//                 'Bi-Weekly': 266,
+//                 '4x/month': 260,
+//               },
+//             },
+//             {
+//               homeSize: '3 bed / 3 bath / 1 kitchen / 1 dining',
+//               prices: {
+//                 '1x/month': 320,
+//                 '3x/month': 312,
+//                 'Bi-Weekly': 306,
+//                 '4x/month': 299,
+//               },
+//             },
+//           ],
+//           addOns: [{ name: 'Inside & Outside of Fridge', price: 35 }],
+//         },
+//         {
+//           type: 'Deep Cleaning',
+//           description:
+//             'Includes all standard cleaning tasks plus baseboards, trim, doors, and detailed kitchen & bathroom cleaning.',
+//           pricing: [
+//             {
+//               homeSize: '1 bed / 1 bath / 1 kitchen / 1 dining',
+//               prices: { 'Base Rate': 214 },
+//             },
+//             { homeSize: '2 bed / 1 bath', prices: { 'Base Rate': 246 } },
+//             { homeSize: '2 bed / 2 bath', prices: { 'Base Rate': 283 } },
+//             { homeSize: '3 bed / 2 bath', prices: { 'Base Rate': 325 } },
+//             { homeSize: '3 bed / 3 bath', prices: { 'Base Rate': 374 } },
+//           ],
+//           addOns: [{ name: 'Inside & Outside of Fridge', price: 35 }],
+//         },
+//         {
+//           type: 'Move-In / Move-Out Cleaning',
+//           description:
+//             'Top-to-bottom cleaning including kitchen, bathrooms, floors, and baseboards. Cabinets cleaned only if empty.',
+//           pricing: [
+//             {
+//               homeSize: '1 bed / 1 bath / 1 kitchen / 1 dining',
+//               prices: {
+//                 '1x/month': 217,
+//                 '3x/month': 208,
+//                 'Bi-Weekly': 201,
+//                 '4x/month': 195,
+//               },
+//             },
+//             {
+//               homeSize: '2 bed / 1 bath / 1 kitchen / 1 dining',
+//               prices: {
+//                 '1x/month': 250,
+//                 '3x/month': 242,
+//                 'Bi-Weekly': 234,
+//                 '4x/month': 225,
+//               },
+//             },
+//             {
+//               homeSize: '2 bed / 2 bath / 1 kitchen / 1 dining',
+//               prices: {
+//                 '1x/month': 288,
+//                 '3x/month': 279,
+//                 'Bi-Weekly': 270,
+//                 '4x/month': 260,
+//               },
+//             },
+//             {
+//               homeSize: '3 bed / 2 bath / 1 kitchen / 1 dining',
+//               prices: {
+//                 '1x/month': 331,
+//                 '3x/month': 321,
+//                 'Bi-Weekly': 311,
+//                 '4x/month': 300,
+//               },
+//             },
+//             {
+//               homeSize: '3 bed / 3 bath / 1 kitchen / 1 dining',
+//               prices: {
+//                 '1x/month': 381,
+//                 '3x/month': 370,
+//                 'Bi-Weekly': 359,
+//                 '4x/month': 348,
+//               },
+//             },
+//           ],
+//           addOns: [{ name: 'Inside & Outside of Fridge', price: 35 }],
+//         },
+//       ],
+//     },
+//   ];
+
+//   get selectedPackageDetails() {
+//     return this.packages.find((p) => p.name === this.selectedPackage);
+//   }
+
+//   get totalPrice(): number {
+//     let total = this.selectedPackageDetails?.price || 0;
+//     if (this.selectedPackageDetails) {
+//       const selectedAddOnObjects = this.selectedPackageDetails.addOns.filter(
+//         (a) => this.selectedAddOns.includes(a.name)
+//       );
+//       total += selectedAddOnObjects.reduce((sum, a) => sum + a.price, 0);
+//     }
+//     return total;
+//   }
+
+//   async ngOnInit() {
+//     // ✅ Load Google API Client
+//     this.loadGoogleApi();
+
+//     const iconRetinaUrl =
+//       'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png';
+//     const iconUrl =
+//       'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png';
+//     const shadowUrl =
+//       'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png';
+//     L.Marker.prototype.options.icon = L.icon({
+//       iconRetinaUrl,
+//       iconUrl,
+//       shadowUrl,
+//       iconSize: [25, 41],
+//       iconAnchor: [12, 41],
+//       shadowSize: [41, 41],
+//     });
+//   }
+
+//   ngAfterViewInit() {
+//     this.map = L.map('map').setView([24.8607, 67.0011], 12);
+//     L.tileLayer(
+//       'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+//       {
+//         attribution: '© OpenStreetMap contributors © CARTO',
+//       }
+//     ).addTo(this.map);
+
+//     this.map.on('click', async (e: any) => {
+//       const { lat, lng } = e.latlng;
+//       this.setMarker(lat, lng);
+//       await this.reverseGeocode(lat, lng);
+//     });
+//   }
+
+//   private async reverseGeocode(lat: number, lng: number) {
+//     const response = await fetch(
+//       `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&accept-language=en`
+//     );
+//     const data = await response.json();
+//     this.address = data.display_name || 'Unknown location';
+//   }
+
+//   async searchLocation() {
+//     if (!this.searchQuery.trim()) {
+//       alert('Please enter an area or address.');
+//       return;
+//     }
+//     const response = await fetch(
+//       `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+//         this.searchQuery
+//       )}&accept-language=en`
+//     );
+//     const results = await response.json();
+
+//     if (results.length > 0) {
+//       const { lat, lon } = results[0];
+//       this.setMarker(parseFloat(lat), parseFloat(lon));
+//       this.map.setView([lat, lon], 15);
+//       this.address = results[0].display_name;
+//     } else {
+//       alert('No results found.');
+//     }
+//   }
+
+//   private setMarker(lat: number, lng: number) {
+//     this.lat = lat;
+//     this.lng = lng;
+//     if (this.marker) this.marker.remove();
+//     this.marker = L.marker([lat, lng]).addTo(this.map);
+//   }
+
+//   toggleAddOn(addOnName: string) {
+//     if (this.selectedAddOns.includes(addOnName)) {
+//       this.selectedAddOns = this.selectedAddOns.filter((a) => a !== addOnName);
+//     } else {
+//       this.selectedAddOns.push(addOnName);
+//     }
+//   }
+
+//   validateBooking(): boolean {
+//     this.errorMessage = '';
+//     this.showTimeError = false;
+//     this.showDateError = false;
+
+//     if (!this.selectedPackage) {
+//       this.errorMessage = 'Please select a package.';
+//       return false;
+//     }
+//     if (!this.selectedDate) {
+//       this.showDateError = true;
+//       return false;
+//     }
+//     if (!this.selectedTime) {
+//       this.showTimeError = true;
+//       return false;
+//     }
+
+//     const selectedDateTime = new Date(
+//       `${this.selectedDate}T${this.selectedTime}`
+//     );
+//     const now = new Date();
+//     if (selectedDateTime < now) {
+//       this.errorMessage = 'You cannot select a past date or time.';
+//       return false;
+//     }
+
+//     const day = selectedDateTime.getDay(); // 0=Sun ... 6=Sat
+//     const hour = selectedDateTime.getHours();
+
+//     if (day === 6) {
+//       this.errorMessage = 'We are closed on Saturdays.';
+//       return false;
+//     }
+//     if (day === 5 && (hour < 8 || hour >= 16)) {
+//       this.errorMessage = 'Friday hours: 8 AM - 4 PM only.';
+//       return false;
+//     }
+//     if (day >= 0 && day <= 4 && (hour < 9 || hour >= 17)) {
+//       this.errorMessage = 'Sun-Thu hours: 9 AM - 5 PM only.';
+//       return false;
+//     }
+//     if (!this.address) {
+//       this.errorMessage = 'Please select your location on the map.';
+//       return false;
+//     }
+
+//     return true;
+//   }
+
+//   async submitBooking() {
+//     if (!this.validateBooking()) return;
+
+//     const templateParams = {
+//       to_email: 'codebyhassann@gmail.com',
+//       package: this.selectedPackage,
+//       addOns: this.selectedAddOns.join(', ') || 'None',
+//       date: this.selectedDate,
+//       time: this.selectedTime,
+//       total: this.totalPrice,
+//       address: this.address,
+//       instructions: this.instructions || 'None',
+//     };
+
+//     try {
+//       const response = await emailjs.send(
+//         environment.emailJS.serviceID,
+//         environment.emailJS.templateID,
+//         templateParams,
+//         environment.emailJS.publicKey
+//       );
+
+//       if (response.status === 200) {
+//         // ✅ Add to Google Calendar
+//         await this.addEventToGoogleCalendar();
+
+//         this.successMessage =
+//           '✅ Booking submitted successfully! Event added to your Google Calendar.';
+//         this.errorMessage = '';
+//       }
+//     } catch (err) {
+//       console.error('Error:', err);
+//       this.errorMessage = 'Something went wrong while sending the booking.';
+//     }
+//   }
+
+//   // ✅ Load Google API Client
+//   private loadGoogleApi() {
+//     const script = document.createElement('script');
+//     script.src = 'https://apis.google.com/js/api.js';
+//     script.onload = () => {
+//       gapi.load('client:auth2', () => {
+//         gapi.client
+//           .init({
+//             apiKey: environment.google.apiKey,
+//             clientId: environment.google.clientId,
+//             discoveryDocs: [
+//               'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
+//             ],
+//             scope: 'https://www.googleapis.com/auth/calendar.events',
+//           })
+//           .then(() => console.log('✅ Google API initialized'));
+//       });
+//     };
+//     document.body.appendChild(script);
+//   }
+
+//   // ✅ Add booking event to Google Calendar
+//   private async addEventToGoogleCalendar() {
+//     try {
+//       const authInstance = gapi.auth2.getAuthInstance();
+//       const user = authInstance.currentUser.get();
+//       if (!user.isSignedIn()) {
+//         await authInstance.signIn();
+//       }
+
+//       const event = {
+//         summary: `Cleaning Booking: ${this.selectedPackage}`,
+//         location: this.address,
+//         description: `Add-ons: ${
+//           this.selectedAddOns.join(', ') || 'None'
+//         }\nInstructions: ${this.instructions || 'None'}`,
+//         start: {
+//           dateTime: `${this.selectedDate}T${this.selectedTime}:00`,
+//           timeZone: 'Asia/Karachi',
+//         },
+//         end: {
+//           dateTime: `${this.selectedDate}T${this.selectedTime}:00`,
+//           timeZone: 'Asia/Karachi',
+//         },
+//       };
+
+//       await gapi.client.calendar.events.insert({
+//         calendarId: 'primary',
+//         resource: event,
+//       });
+
+//       console.log('✅ Event added to Google Calendar');
+//     } catch (err) {
+//       console.error('Google Calendar error:', err);
+//       this.errorMessage = 'Google Calendar integration failed.';
+//     }
+//   }
+
+//   openedPackage: string | null = null;
+
+//   togglePackage(pkgName: string) {
+//     this.openedPackage = this.openedPackage === pkgName ? null : pkgName;
+//   }
+
+//   getAddOnPrice(addOnName: string): number {
+//     if (!this.selectedPackageDetails) return 0;
+//     const addOn = this.selectedPackageDetails.addOns.find(
+//       (a) => a.name === addOnName
+//     );
+//     return addOn ? addOn.price : 0;
+//   }
+// }
+
+
+
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +441,12 @@ declare const gapi: any;
   styleUrls: ['./booking.component.css'],
 })
 export class BookingComponent implements OnInit, AfterViewInit {
-  selectedPackage: string | null = null;
+  // user selections
+  selectedPackage: string | null = 'Cleaning Services'; // default to the single package
+  selectedType: string | null = null; // 'Standard Cleaning' | 'Deep Cleaning' | 'Move-In / Move-Out Cleaning'
+  selectedHomeSize: string | null = null; // e.g. '1 bed / 1 bath / 1 kitchen / 1 dining'
+  selectedFrequency: string | null = null; // e.g. '1x/month', '3x/month', 'Bi-Weekly', '4x/month' or null for base-rate types
+
   selectedAddOns: string[] = [];
   instructions = '';
   selectedDate = '';
@@ -33,89 +463,218 @@ export class BookingComponent implements OnInit, AfterViewInit {
   private map: any;
   private marker: any;
 
-  // ✅ Packages
+  // ✅ Packages (Updated with Client Data)
   packages = [
     {
-      name: 'Standard Cleaning',
-      description: '1 bedroom, 1 bathroom, 1 kitchen, 1 dining/living room.',
-      price: 176,
-      addOns: [
-        { name: 'Microwave Cleaning (Inside & Outside)', price: 20 },
-        { name: 'Stove Cleaning (Inside & Outside)', price: 40 },
-        { name: 'Fridge Cleaning (Inside & Outside)', price: 35 },
-      ],
-    },
-    {
-      name: 'Deep Cleaning',
+      name: 'Cleaning Services',
       description:
-        'Thorough cleaning for all rooms, including baseboards and vents.',
-      price: 220,
-      addOns: [
-        { name: 'Oven Deep Cleaning', price: 45 },
-        { name: 'Window Interior Cleaning', price: 30 },
-        { name: 'Cabinet Interior Cleaning', price: 25 },
-      ],
-    },
-    {
-      name: 'Move-In / Move-Out Cleaning',
-      description:
-        'Full property cleaning before moving in or after moving out.',
-      price: 260,
-      addOns: [
-        { name: 'Garage Cleaning', price: 50 },
-        { name: 'Balcony/Patio Cleaning', price: 30 },
-        { name: 'Wall Spot Cleaning', price: 25 },
-      ],
-    },
-    {
-      name: 'Post-Construction Cleaning',
-      description: 'Removes dust, paint marks, and residue from all surfaces.',
-      price: 300,
-      addOns: [
-        { name: 'Debris Removal', price: 40 },
-        { name: 'Window Polishing', price: 30 },
-        { name: 'Floor Polishing', price: 50 },
-      ],
-    },
-    {
-      name: 'Office Cleaning',
-      description:
-        'Regular or deep cleaning for offices and commercial spaces.',
-      price: 240,
-      addOns: [
-        { name: 'Computer Equipment Dusting', price: 25 },
-        { name: 'Conference Room Sanitization', price: 30 },
-        { name: 'Kitchenette Cleaning', price: 20 },
-      ],
-    },
-    {
-      name: 'Airbnb / Rental Cleaning',
-      description:
-        'Fast turnaround cleaning between guest stays, includes linens change.',
-      price: 200,
-      addOns: [
-        { name: 'Laundry & Linen Service', price: 35 },
-        { name: 'Fridge Restock (Basic Items)', price: 25 },
-        { name: 'Toiletry Refill', price: 15 },
+        'Choose between Standard, Deep, or Move-In/Move-Out cleaning types with flexible frequency options.',
+      types: [
+        {
+          type: 'Standard Cleaning',
+          description:
+            'Includes dusting, vacuuming, mopping, kitchen and bathroom cleaning, and surface wipe-downs.',
+          pricing: [
+            {
+              homeSize: '1 bed / 1 bath / 1 kitchen / 1 dining',
+              prices: {
+                '1x/month': 189,
+                '3x/month': 180,
+                'Bi-Weekly': 175,
+                '4x/month': 170,
+              },
+            },
+            {
+              homeSize: '2 bed / 1 bath / 1 kitchen / 1 dining',
+              prices: {
+                '1x/month': 215,
+                '3x/month': 208,
+                'Bi-Weekly': 201,
+                '4x/month': 195,
+              },
+            },
+            {
+              homeSize: '2 bed / 2 bath / 1 kitchen / 1 dining',
+              prices: {
+                '1x/month': 245,
+                '3x/month': 239,
+                'Bi-Weekly': 231,
+                '4x/month': 225,
+              },
+            },
+            {
+              homeSize: '3 bed / 2 bath / 1 kitchen / 1 dining',
+              prices: {
+                '1x/month': 280,
+                '3x/month': 273,
+                'Bi-Weekly': 266,
+                '4x/month': 260,
+              },
+            },
+            {
+              homeSize: '3 bed / 3 bath / 1 kitchen / 1 dining',
+              prices: {
+                '1x/month': 320,
+                '3x/month': 312,
+                'Bi-Weekly': 306,
+                '4x/month': 299,
+              },
+            },
+          ],
+          addOns: [{ name: 'Inside & Outside of Fridge', price: 35 }],
+        },
+        {
+          type: 'Deep Cleaning',
+          description:
+            'Includes all standard cleaning tasks plus baseboards, trim, doors, and detailed kitchen & bathroom cleaning.',
+          pricing: [
+            {
+              homeSize: '1 bed / 1 bath / 1 kitchen / 1 dining',
+              prices: { 'Base Rate': 214 },
+            },
+            { homeSize: '2 bed / 1 bath', prices: { 'Base Rate': 246 } },
+            { homeSize: '2 bed / 2 bath', prices: { 'Base Rate': 283 } },
+            { homeSize: '3 bed / 2 bath', prices: { 'Base Rate': 325 } },
+            { homeSize: '3 bed / 3 bath', prices: { 'Base Rate': 374 } },
+          ],
+          addOns: [{ name: 'Inside & Outside of Fridge', price: 35 }],
+        },
+        {
+          type: 'Move-In / Move-Out Cleaning',
+          description:
+            'Top-to-bottom cleaning including kitchen, bathrooms, floors, and baseboards. Cabinets cleaned only if empty.',
+          pricing: [
+            {
+              homeSize: '1 bed / 1 bath / 1 kitchen / 1 dining',
+              prices: {
+                '1x/month': 217,
+                '3x/month': 208,
+                'Bi-Weekly': 201,
+                '4x/month': 195,
+              },
+            },
+            {
+              homeSize: '2 bed / 1 bath / 1 kitchen / 1 dining',
+              prices: {
+                '1x/month': 250,
+                '3x/month': 242,
+                'Bi-Weekly': 234,
+                '4x/month': 225,
+              },
+            },
+            {
+              homeSize: '2 bed / 2 bath / 1 kitchen / 1 dining',
+              prices: {
+                '1x/month': 288,
+                '3x/month': 279,
+                'Bi-Weekly': 270,
+                '4x/month': 260,
+              },
+            },
+            {
+              homeSize: '3 bed / 2 bath / 1 kitchen / 1 dining',
+              prices: {
+                '1x/month': 331,
+                '3x/month': 321,
+                'Bi-Weekly': 311,
+                '4x/month': 300,
+              },
+            },
+            {
+              homeSize: '3 bed / 3 bath / 1 kitchen / 1 dining',
+              prices: {
+                '1x/month': 381,
+                '3x/month': 370,
+                'Bi-Weekly': 359,
+                '4x/month': 348,
+              },
+            },
+          ],
+          addOns: [{ name: 'Inside & Outside of Fridge', price: 35 }],
+        },
       ],
     },
   ];
 
+  // --- helpers to access current selections ---
   get selectedPackageDetails() {
-    return this.packages.find((p) => p.name === this.selectedPackage);
+    return this.packages.find((p) => p.name === this.selectedPackage) || null;
   }
 
+  get selectedTypeDetails() {
+    if (!this.selectedPackageDetails || !this.selectedType) return null;
+    return (
+      this.selectedPackageDetails.types.find(
+        (t) => t.type === this.selectedType
+      ) || null
+    );
+  }
+
+  // available types (useful for template)
+  get availableTypes(): string[] {
+    return this.selectedPackageDetails
+      ? this.selectedPackageDetails.types.map((t) => t.type)
+      : [];
+  }
+
+  // available home sizes for selected type
+  get availableHomeSizes(): string[] {
+    const type = this.selectedTypeDetails;
+    return type ? type.pricing.map((p: any) => p.homeSize) : [];
+  }
+
+  // available frequencies for selected type & home size (if the pricing object has multiple keys)
+  get availableFrequencies(): string[] {
+    const type = this.selectedTypeDetails;
+    if (!type || !this.selectedHomeSize) return [];
+    const entry = type.pricing.find(
+      (p: any) => p.homeSize === this.selectedHomeSize
+    );
+    if (!entry) return [];
+    return Object.keys(entry.prices); // e.g. ['1x/month','3x/month','Bi-Weekly','4x/month'] or ['Base Rate']
+  }
+
+  // compute base price for the currently selected type/homeSize/frequency
+  private getBasePrice(): number {
+    const type = this.selectedTypeDetails;
+    if (!type || !this.selectedHomeSize) return 0;
+    const entry = type.pricing.find(
+      (p: any) => p.homeSize === this.selectedHomeSize
+    );
+    if (!entry) return 0;
+    // If the pricing has a 'Base Rate' key (Deep Cleaning), use that
+    const prices = entry.prices as Record<string, number>;
+    if (
+      this.selectedFrequency &&
+      prices[this.selectedFrequency] !== undefined
+    ) {
+      return prices[this.selectedFrequency];
+    }
+    // fallback: if there is a Base Rate, use it
+    if (prices['Base Rate'] !== undefined) return prices['Base Rate'];
+    // fallback: pick the first available numeric price
+    const firstKey = Object.keys(prices)[0];
+    return prices[firstKey] || 0;
+  }
+
+  // Updated total price getter
   get totalPrice(): number {
-    let total = this.selectedPackageDetails?.price || 0;
-    if (this.selectedPackageDetails) {
-      const selectedAddOnObjects = this.selectedPackageDetails.addOns.filter(
-        (a) => this.selectedAddOns.includes(a.name)
+    let total = this.getBasePrice();
+    // add selected add-ons from the selected type (addOns are per-type)
+    const type = this.selectedTypeDetails;
+    if (type && type.addOns && this.selectedAddOns.length) {
+      const selectedAddOnObjects = type.addOns.filter((a: any) =>
+        this.selectedAddOns.includes(a.name)
       );
-      total += selectedAddOnObjects.reduce((sum, a) => sum + a.price, 0);
+      total += selectedAddOnObjects.reduce(
+        (sum: number, a: any) => sum + a.price,
+        0
+      );
     }
     return total;
   }
 
+  // Lifecycle & map/search code (unchanged except small typings)
   async ngOnInit() {
     // ✅ Load Google API Client
     this.loadGoogleApi();
@@ -189,6 +748,7 @@ export class BookingComponent implements OnInit, AfterViewInit {
     this.marker = L.marker([lat, lng]).addTo(this.map);
   }
 
+  // toggle add-ons (now per-type)
   toggleAddOn(addOnName: string) {
     if (this.selectedAddOns.includes(addOnName)) {
       this.selectedAddOns = this.selectedAddOns.filter((a) => a !== addOnName);
@@ -206,6 +766,21 @@ export class BookingComponent implements OnInit, AfterViewInit {
       this.errorMessage = 'Please select a package.';
       return false;
     }
+    if (!this.selectedType) {
+      this.errorMessage = 'Please select a cleaning type.';
+      return false;
+    }
+    if (!this.selectedHomeSize) {
+      this.errorMessage = 'Please select a home size.';
+      return false;
+    }
+    // For types with frequency options, require frequency selection
+    const freqs = this.availableFrequencies;
+    if (freqs.length > 0 && !this.selectedFrequency) {
+      this.errorMessage = 'Please select a frequency (or Base Rate).';
+      return false;
+    }
+
     if (!this.selectedDate) {
       this.showDateError = true;
       return false;
@@ -253,6 +828,9 @@ export class BookingComponent implements OnInit, AfterViewInit {
     const templateParams = {
       to_email: 'codebyhassann@gmail.com',
       package: this.selectedPackage,
+      type: this.selectedType,
+      homeSize: this.selectedHomeSize,
+      frequency: this.selectedFrequency || 'Base Rate',
       addOns: this.selectedAddOns.join(', ') || 'None',
       date: this.selectedDate,
       time: this.selectedTime,
@@ -314,9 +892,11 @@ export class BookingComponent implements OnInit, AfterViewInit {
       }
 
       const event = {
-        summary: `Cleaning Booking: ${this.selectedPackage}`,
+        summary: `Cleaning Booking: ${this.selectedType} - ${this.selectedHomeSize}`,
         location: this.address,
-        description: `Add-ons: ${
+        description: `Type: ${this.selectedType}\nHome Size: ${
+          this.selectedHomeSize
+        }\nFrequency: ${this.selectedFrequency || 'Base Rate'}\nAdd-ons: ${
           this.selectedAddOns.join(', ') || 'None'
         }\nInstructions: ${this.instructions || 'None'}`,
         start: {
@@ -324,6 +904,7 @@ export class BookingComponent implements OnInit, AfterViewInit {
           timeZone: 'Asia/Karachi',
         },
         end: {
+          // currently same as start; adjust if you want a duration
           dateTime: `${this.selectedDate}T${this.selectedTime}:00`,
           timeZone: 'Asia/Karachi',
         },
@@ -347,11 +928,11 @@ export class BookingComponent implements OnInit, AfterViewInit {
     this.openedPackage = this.openedPackage === pkgName ? null : pkgName;
   }
 
+  // returns add-on price for currently selected type
   getAddOnPrice(addOnName: string): number {
-    if (!this.selectedPackageDetails) return 0;
-    const addOn = this.selectedPackageDetails.addOns.find(
-      (a) => a.name === addOnName
-    );
+    const type = this.selectedTypeDetails;
+    if (!type || !type.addOns) return 0;
+    const addOn = type.addOns.find((a: any) => a.name === addOnName);
     return addOn ? addOn.price : 0;
   }
 }
