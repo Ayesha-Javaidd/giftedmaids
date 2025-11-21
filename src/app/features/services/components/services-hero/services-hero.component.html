@@ -1,0 +1,39 @@
+<section class="py-16 mt-10 bg-black font-poppins text-center">
+  <h2 class="text-4xl text-yellow-500 font-bold tracking-wide mb-6">
+    Our Services
+  </h2>
+
+  <p class="max-w-5xl mx-auto text-yellow-50 mb-6 text-xs leading-relaxed">
+    This is your Services Page. It's a great opportunity to provide information
+    about the services you provide. Double click on the text box to start
+    editing your content and make sure to add all the relevant details you want
+    to share with site visitors. Whether you're offering multiple services,
+    courses or programs, you can edit this space to fit your website's needs.
+    Simply double click on this section to open the content manager and modify
+    the content. Explain what each item entails and add photos or videos for
+    even more engagement.
+  </p>
+
+  <div
+    class="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 px-4"
+  >
+    <div
+      *ngFor="let service of services"
+      class="p-8 bg-gray-600/40 border border-yellow-500/40 rounded-2xl shadow-md hover:shadow-yellow-500/20 hover:-translate-y-1 transition-all duration-300"
+    >
+      <!-- Icon -->
+      <div
+        class="w-14 h-14 mb-4 mx-auto flex items-center justify-center rounded-full bg-yellow-500/20 text-yellow-500 text-2xl"
+      >
+        <i [class]="service.icon"></i>
+      </div>
+
+      <h3 class="text-xl text-yellow-500 font-semibold mb-3">
+        {{ service.title }}
+      </h3>
+      <p class="text-sm text-yellow-50 leading-relaxed">
+        {{ service.description }}
+      </p>
+    </div>
+  </div>
+</section>

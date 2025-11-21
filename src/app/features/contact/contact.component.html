@@ -1,0 +1,117 @@
+<section class="font-poppins mt-16 bg-black text-yellow-50">
+  <!-- HEADER -->
+  <div class="text-center py-16">
+    <h1 class="text-4xl font-bold text-yellow-500 tracking-wide">Contact Us</h1>
+    <p class="mt-6 text-yellow-100 max-w-xl mx-auto text-lg leading-relaxed">
+      Have questions or ready to schedule your cleaning? We're here to help!
+    </p>
+  </div>
+
+  <!-- CONTACT DETAILS + FORM -->
+  <div class="bg-gray-700/40">
+    <div
+      class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 py-16 px-6"
+    >
+      <!-- LEFT SIDE -->
+      <div class="space-y-8">
+        <!-- Call -->
+        <div class="flex items-start space-x-4 group">
+          <div
+            class="p-4 bg-yellow-500 rounded-full text-black shadow-md transition-all group-hover:bg-yellow-400"
+          >
+            <i class="fa-solid fa-phone text-xl"></i>
+          </div>
+          <div>
+            <h3 class="font-semibold text-lg text-yellow-500">Call</h3>
+            <p class="text-yellow-50">508-280-9008</p>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="flex items-start space-x-4 group">
+          <div
+            class="p-4 bg-yellow-500 rounded-full text-black shadow-md transition-all group-hover:bg-yellow-400"
+          >
+            <i class="fa-solid fa-envelope text-xl"></i>
+          </div>
+          <div>
+            <h3 class="font-semibold text-lg text-yellow-500">Email</h3>
+            <p class="text-yellow-50 font-medium">
+              <a
+                href="mailto:Support@giftedmaidsct.com"
+                class="hover:underline"
+              >
+                Support&#64;giftedmaidsct.com
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="flex items-start space-x-4 group">
+          <div
+            class="p-4 bg-yellow-500 rounded-full text-black shadow-md transition-all group-hover:bg-yellow-400"
+          >
+            <i class="fa-solid fa-location-dot text-xl"></i>
+          </div>
+          <div>
+            <h3 class="font-semibold text-lg text-yellow-500">Address</h3>
+            <p class="text-yellow-50 leading-relaxed">
+              2389 Main St. STE 100 <br />Glastonbury CT 06033
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE (FORM) -->
+      <form
+        (ngSubmit)="sendMessage()"
+        class="space-y-5 bg-gray-700 shadow-lg p-8 rounded-xl border border-yellow-500"
+      >
+        <input
+          type="text"
+          placeholder="Your Name"
+          [(ngModel)]="name"
+          name="name"
+          class="w-full p-3 rounded-md border border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none bg-yellow-50 text-black"
+        />
+
+        <input
+          type="email"
+          placeholder="Your Email"
+          [(ngModel)]="email"
+          name="email"
+          class="w-full p-3 rounded-md border border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none bg-yellow-50 text-black"
+        />
+
+        <textarea
+          rows="4"
+          placeholder="Your Message"
+          [(ngModel)]="message"
+          name="message"
+          class="w-full p-3 rounded-md border border-yellow-500 focus:ring-2 outline-none bg-yellow-50 text-black"
+        ></textarea>
+
+        <button
+          type="submit"
+          class="w-full bg-black border border-yellow-500 cursor-pointer text-yellow-50 py-3 rounded-md font-semibold transition-all shadow-md hover:bg-yellow-500 hover:text-black"
+        >
+          Send Message
+        </button>
+
+        <p *ngIf="success" class="text-green-400">{{ success }}</p>
+        <p *ngIf="error" class="text-red-400">{{ error }}</p>
+      </form>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center py-14 bg-gray-700/40">
+      <a
+        routerLink="/book"
+        class="text-md bg-yellow-500 text-black cursor-pointer font-semibold border border-yellow-500 px-8 py-3 rounded-lg hover:bg-gray-300 hover:text-black transition-all"
+      >
+        <i class="fa-solid fa-broom mr-2"></i> Book a Cleaning Service
+      </a>
+    </div>
+  </div>
+</section>

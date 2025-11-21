@@ -1,0 +1,16 @@
+<section class="py-16 font-poppins bg-gray-800">
+  <div
+    class="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10 text-center"
+  >
+    <div *ngFor="let item of stats" class="group fade-up">
+      <h2
+        class="text-5xl font-bold text-gray-100 transition group-hover:text-yellow-400"
+      >
+        {{ item.number }}<span>{{ item.suffix }}</span>
+      </h2>
+      <p class="uppercase text-sm text-gray-300 mt-2 tracking-wide">
+        {{ item.label }}
+      </p>
+    </div>
+  </div>
+</section>

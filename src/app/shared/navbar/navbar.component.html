@@ -1,0 +1,88 @@
+<nav
+  class="w-full fixed top-0 z-50 bg-black text-yellow-500 flex items-center justify-between p-6 md:p-10 h-20"
+>
+  <!-- Logo -->
+  <div class="flex items-center gap-3 cursor-pointer select-none">
+    <a [routerLink]="'/'">
+      <img [src]="logoPreview" alt="System Logo" class="w-28" />
+    </a>
+  </div>
+
+  <ul class="hidden md:flex space-x-10 tracking-wide">
+    <li *ngFor="let link of navLinks">
+      <a
+        [routerLink]="link.path"
+        routerLinkActive
+        #rla="routerLinkActive"
+        [ngClass]="{
+          'text-white': rla.isActive,
+          'text-yellow-500 hover:text-yellow-400': !rla.isActive
+        }"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="transition-colors duration-300"
+      >
+        {{ link.label }}
+      </a>
+    </li>
+  </ul>
+
+  <div
+    class="hidden md:flex items-center bg-gray-800 text-white px-2 rounded-lg"
+  >
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (keyup.enter)="onSearch()"
+      class="bg-transparent text-gray-400 placeholder-white/70 outline-none text-sm w-40"
+      placeholder="Search..."
+    />
+    <button
+      (click)="onSearch()"
+      class="ml-1 text-xl font-semibold text-gray-400 hover:opacity-80 transition"
+    >
+      ⌕
+    </button>
+  </div>
+
+  <!-- CTA Button -->
+  <a
+    [routerLink]="ctaButton.path"
+    class="hidden md:inline-block bg-yellow-500 text-black px-5 py-1.5 rounded-full font-semibold text-sm hover:opacity-90 transition"
+  >
+    {{ ctaButton.label }}
+  </a>
+
+  <!-- Mobile Toggle -->
+  <button (click)="toggleMenu()" class="md:hidden focus:outline-none">
+    <svg
+      *ngIf="!isMenuOpen"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="2"
+      stroke="currentColor"
+      class="w-6 h-6 text-yellow-500"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M4 6h16M4 12h16M4 18h16"
+      />
+    </svg>
+    <svg
+      *ngIf="isMenuOpen"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="2"
+      stroke="currentColor"
+      class="w-6 h-6 text-yellow-500"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M6 18L18 6M6 6l12 12"
+      />
+    </svg>
+  </button>
+</nav>

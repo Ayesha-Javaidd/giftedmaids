@@ -1,0 +1,256 @@
+<section class="min-h-screen bg-black font-poppins py-24">
+  <div class="max-w-4xl mx-auto px-6">
+    <h2 class="text-4xl font-extrabold text-center mb-12 text-yellow-500">
+      Book Your Cleaning
+    </h2>
+
+    <!-- Cleaning Package -->
+    <div class="bg-gray-700/40 shadow-lg rounded-2xl p-6 mb-10 text-yellow-50">
+      <h3
+        class="font-semibold text-xl mb-4 flex items-center gap-2 text-yellow-50"
+      >
+        <i class="fa-solid fa-box-open text-yellow-500"></i> Cleaning Services
+      </h3>
+
+      <!-- Cleaning Type -->
+      <div class="mb-4">
+        <label class="block font-medium text-gray-300 mb-2"
+          >Cleaning Type</label
+        >
+        <select
+          [(ngModel)]="selectedType"
+          class="border border-gray-600 bg-gray-700 text-yellow-50 p-3 rounded-lg w-full focus:ring-2 focus:ring-yellow-400 outline-none transition"
+        >
+          <option value="" disabled selected>Select cleaning type</option>
+          <option *ngFor="let type of availableTypes" [value]="type">
+            {{ type }}
+          </option>
+        </select>
+        <p *ngIf="showTypeError" class="text-red-400 text-sm mt-1">
+          Please select a cleaning type.
+        </p>
+      </div>
+
+      <!-- Home Size -->
+      <div class="mb-4" *ngIf="selectedType">
+        <label class="block font-medium text-gray-300 mb-2">Home Size</label>
+        <select
+          [(ngModel)]="selectedHomeSize"
+          class="border border-gray-600 bg-gray-700 text-yellow-50 p-3 rounded-lg w-full focus:ring-2 focus:ring-yellow-400 outline-none transition"
+        >
+          <option value="" disabled selected>Select home size</option>
+          <option *ngFor="let size of availableHomeSizes" [value]="size">
+            {{ size }}
+          </option>
+        </select>
+        <p *ngIf="showHomeSizeError" class="text-red-400 text-sm mt-1">
+          Please select home size.
+        </p>
+      </div>
+
+      <!-- Frequency -->
+      <div
+        class="mb-4"
+        *ngIf="selectedHomeSize && availableFrequencies.length > 0"
+      >
+        <label class="block font-medium text-gray-300 mb-2">Frequency</label>
+        <select
+          [(ngModel)]="selectedFrequency"
+          class="border border-gray-600 bg-gray-700 text-yellow-50 p-3 rounded-lg w-full focus:ring-2 focus:ring-yellow-400 outline-none transition"
+        >
+          <option value="" disabled selected>Select frequency</option>
+          <option *ngFor="let freq of availableFrequencies" [value]="freq">
+            {{ freq }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Add-ons -->
+      <div
+        *ngIf="selectedTypeDetails?.addOns?.length"
+        class="mt-4 border-t border-gray-700 pt-3"
+      >
+        <h4 class="font-semibold text-gray-300 text-sm mb-2">
+          Optional Add-ons:
+        </h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <label
+            *ngFor="let add of selectedTypeDetails?.addOns"
+            class="flex items-center border border-gray-600 rounded-lg p-3 hover:shadow-sm hover:bg-gray-700/40 cursor-pointer transition-all"
+          >
+            <input
+              type="checkbox"
+              [checked]="selectedAddOns.includes(add.name)"
+              (change)="toggleAddOn(add.name)"
+              class="mr-3 accent-yellow-500"
+            />
+            <span class="text-gray-200">{{ add.name }} — ${{ add.price }}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Date & Time -->
+    <div class="bg-gray-700/40 shadow-lg rounded-2xl p-6 mb-10 text-yellow-50">
+      <h3
+        class="font-semibold text-xl mb-4 flex items-center gap-2 text-yellow-50"
+      >
+        <i class="fa-regular fa-calendar text-yellow-500"></i> Choose Date &
+        Time
+      </h3>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <div class="w-full sm:w-1/2">
+          <input
+            type="date"
+            [(ngModel)]="selectedDate"
+            class="border border-gray-600 bg-gray-700/40 text-yellow-50 p-3 rounded-lg w-full focus:ring-2 focus:ring-yellow-400 outline-none transition"
+          />
+          <p *ngIf="showDateError" class="text-red-400 text-sm mt-1">
+            Please select a valid date.
+          </p>
+        </div>
+        <div class="w-full sm:w-1/2">
+          <input
+            type="time"
+            [(ngModel)]="selectedTime"
+            class="border border-gray-600 bg-gray-700/40 text-yellow-50 p-3 rounded-lg w-full focus:ring-2 focus:ring-yellow-400 outline-none transition"
+          />
+          <p *ngIf="showTimeError" class="text-red-400 text-sm mt-1">
+            Please select a booking time.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="bg-gray-700/40 shadow-lg rounded-2xl p-6 mb-10 text-yellow-50">
+      <h3
+        class="font-semibold text-xl mb-4 flex items-center gap-2 text-yellow-50"
+      >
+        <i class="fa-solid fa-location-dot text-yellow-500"></i> Select Location
+      </h3>
+      <div class="flex gap-3 mb-3">
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          placeholder="Search for an area or address..."
+          class="border border-gray-600 bg-gray-700 text-yellow-50 placeholder-gray-400 p-3 rounded-lg flex-1 focus:ring-2 focus:ring-yellow-400 outline-none transition"
+        />
+        <button
+          (click)="searchLocation()"
+          class="bg-yellow-500 text-gray-900 px-5 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-all"
+        >
+          Search
+        </button>
+      </div>
+
+      <div
+        id="map"
+        class="w-full h-64 rounded-lg mb-3 border border-gray-700"
+      ></div>
+      <label class="block text-gray-300 mb-2 flex items-center gap-2">
+        <i class="fa-solid fa-pen-to-square text-yellow-500"></i>
+        Enter address manually (optional)
+      </label>
+
+      <input
+        type="text"
+        [(ngModel)]="address"
+        (input)="clearMarker()"
+        placeholder="Enter address manually or pick from map"
+        class="w-full border border-gray-600 bg-gray-700 text-gray-300 p-3 rounded-lg"
+      />
+
+    </div>
+
+    <!-- Instructions -->
+    <div class="bg-gray-700/40 shadow-lg rounded-2xl p-6 mb-10 text-yellow-50">
+      <h3
+        class="font-semibold text-xl mb-4 flex items-center gap-2 text-yellow-50"
+      >
+        <i class="fa-regular fa-note-sticky text-yellow-500"></i> Special
+        Instructions
+      </h3>
+      <textarea
+        [(ngModel)]="instructions"
+        rows="3"
+        placeholder="e.g. Key is under the mat..."
+        class="w-full border border-gray-600 bg-gray-700 text-yellow-50 placeholder-gray-400 p-3 rounded-lg resize-none focus:ring-2 focus:ring-yellow-400 outline-none transition"
+      ></textarea>
+    </div>
+
+    <!-- Selected Details & Total -->
+    <div
+      *ngIf="selectedType && selectedHomeSize"
+      class="bg-gray-700/40 border border-gray-700 rounded-2xl p-6 mb-8 shadow-inner text-yellow-50"
+    >
+      <h4 class="font-semibold text-yellow-50 mb-3">Selected Details:</h4>
+      <p><strong>Type:</strong> {{ selectedType }}</p>
+      <p><strong>Home Size:</strong> {{ selectedHomeSize }}</p>
+      <p *ngIf="selectedFrequency">
+        <strong>Frequency:</strong> {{ selectedFrequency }}
+      </p>
+
+      <div *ngIf="selectedAddOns.length">
+        <strong>Add-ons:</strong>
+        <ul class="ml-5 list-disc text-gray-300">
+          <li *ngFor="let add of selectedAddOns">
+            {{ add }} — ${{ getAddOnPrice(add) }}
+          </li>
+        </ul>
+      </div>
+
+      <p class="mt-3 font-semibold text-lg text-yellow-400">
+        Total: ${{ totalPrice }}
+      </p>
+    </div>
+
+    <!-- Submit -->
+    <button
+      (click)="submitBooking()"
+      class="w-full cursor-pointer bg-yellow-500 text-gray-900 py-4 rounded-xl font-semibold text-lg hover:bg-yellow-400 transition-all shadow-md hover:shadow-lg"
+    >
+      Submit Booking
+    </button>
+
+    <!-- Feedback (All Errors & Success Below Submit) -->
+    <div class="mt-4">
+      <div
+        *ngIf="showTypeError"
+        class="text-red-400 p-2 rounded-lg font-medium"
+      >
+        Please select a cleaning type.
+      </div>
+      <div
+        *ngIf="showHomeSizeError"
+        class="text-red-400 p-2 rounded-lg font-medium"
+      >
+        Please select home size.
+      </div>
+      <div
+        *ngIf="showDateError"
+        class="text-red-400 p-2 rounded-lg font-medium"
+      >
+        Please select a valid date.
+      </div>
+      <div
+        *ngIf="showTimeError"
+        class="text-red-400 p-2 rounded-lg font-medium"
+      >
+        Please select a booking time.
+      </div>
+      <div
+        *ngIf="errorMessage"
+        class="bg-red-900/30 border border-red-600 text-red-400 p-4 rounded-lg text-center font-medium animate-pulse"
+      >
+        {{ errorMessage }}
+      </div>
+      <div
+        *ngIf="successMessage"
+        class="bg-green-900/30 border border-green-600 text-green-400 mt-4 p-4 rounded-lg text-center font-medium"
+      >
+        {{ successMessage }}
+      </div>
+    </div>
+  </div>
+</section>

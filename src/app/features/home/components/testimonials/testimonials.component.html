@@ -1,0 +1,16 @@
+<section class="bg-gray-200 py-16 font-poppins">
+  <h2 class="text-center text-3xl font-bold tracking-wide mb-2 fade-up-card">
+    WHAT OUR CLIENTS SAY
+  </h2>
+
+  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+    <div
+      *ngFor="let t of testimonials; let i = index"
+      class="bg-white p-6 shadow rounded-lg fade-up-card"
+      [style.transitionDelay]="i * 0.2 + 's'"
+    >
+      <p class="text-gray-700 italic">"{{ t.quote }}"</p>
+      <p class="mt-4 font-semibold text-gray-900">- {{ t.author }}</p>
+    </div>
+  </div>
+</section>

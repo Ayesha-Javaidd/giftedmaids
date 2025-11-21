@@ -1,0 +1,21 @@
+<div
+  class="border rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition bg-white"
+>
+  <img [src]="image" alt="{{ title }}" class="w-full h-40 object-cover" />
+
+  <div class="p-4 space-y-2">
+    <h3 class="text-lg font-semibold">{{ title }}</h3>
+    <p class="text-sm text-gray-600">{{ description }}</p>
+
+    <p *ngIf="price" class="text-md font-semibold text-black mt-2">
+      Starting at {{ price }}
+    </p>
+
+    <a
+      [routerLink]="link"
+      class="inline-block mt-3 text-sm font-medium border border-black px-4 py-1 rounded-full hover:bg-gray-700 hover:text-white transition"
+    >
+      Book Now
+    </a>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<section class="w-full py-20 px-8 md:px-20 bg-gray-200 text-center">
+  <h2
+    class="text-3xl md:text-4xl font-semibold tracking-wide text-black slide-in"
+  >
+    OUR COMPREHENSIVE HOUSE CLEANING SERVICES
+  </h2>
+
+  <p class="text-sm text-gray-600 mt-2 mb-10 slide-in">Explore Our Services</p>
+
+  <div class="grid md:grid-cols-3 gap-10 place-items-center">
+    <app-service-card
+      *ngFor="let service of services; let i = index"
+      class="slide-in"
+      [style.transitionDelay]="i * 0.2 + 's'"
+      [image]="service.image"
+      [title]="service.title"
+      [description]="service.description"
+      [link]="service.link"
+    ></app-service-card>
+  </div>
+</section>

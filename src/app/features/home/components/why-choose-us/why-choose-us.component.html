@@ -1,0 +1,26 @@
+<section class="bg-black text-white py-16 font-poppins">
+  <h2
+    class="text-center text-3xl font-bold tracking-wide mb-10 fade-up-card text-yellow-500"
+  >
+    WHY CHOOSE US
+  </h2>
+
+  <div
+    class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-center"
+  >
+    <div
+      *ngFor="let f of features; let i = index"
+      class="space-y-4 px-6 fade-up-card"
+      [style.transitionDelay]="i * 0.2 + 's'"
+    >
+      <div
+        class="w-16 h-16 mb-6 mx-auto flex items-center justify-center rounded-full bg-white/10 border border-yellow-500"
+      >
+        <i [class]="f.icon + ' text-yellow-500 text-2xl'"></i>
+      </div>
+
+      <h3 class="font-semibold text-lg text-yellow-50">{{ f.title }}</h3>
+      <p class="text-sm text-yellow-50 leading-relaxed">{{ f.description }}</p>
+    </div>
+  </div>
+</section>

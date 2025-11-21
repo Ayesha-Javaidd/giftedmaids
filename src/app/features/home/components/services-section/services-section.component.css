@@ -1,0 +1,24 @@
+/* Start hidden */
+.slide-in {
+    opacity: 0;
+    transform: translateX(-80px);
+    /* or 80px for right-side slide */
+    transition: all 0.9s ease-out;
+}
+
+/* When visible */
+.slide-in.in-view {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Optional: stagger even cards from right */
+@media (min-width: 768px) {
+    .slide-in:nth-child(even) {
+        transform: translateX(80px);
+    }
+
+    .slide-in:nth-child(even).in-view {
+        transform: translateX(0);
+    }
+}

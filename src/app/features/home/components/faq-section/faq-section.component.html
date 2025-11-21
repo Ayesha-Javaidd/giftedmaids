@@ -1,0 +1,32 @@
+<section class="bg-black text-white py-16 font-poppins">
+  <h2 class="text-center text-3xl font-bold tracking-wide mb-10 text-yellow-50">
+    Frequently Asked Questions
+  </h2>
+
+  <div class="max-w-4xl mx-auto space-y-4">
+    <div
+      *ngFor="let f of faqs; let i = index"
+      class="border-b border-yellow-500 py-4"
+    >
+      <div
+        class="cursor-pointer text-yellow-500 font-medium text-lg flex justify-between items-center"
+        (click)="toggle(i)"
+      >
+        <span>{{ f.question }}</span>
+        <span
+          class="text-yellow-300 transition-transform duration-300"
+          [class.rotate-180]="openedIndex === i"
+        >
+          ▼
+        </span>
+      </div>
+
+      <div
+        [@expandCollapse]="openedIndex === i ? 'expanded' : 'collapsed'"
+        class="overflow-hidden"
+      >
+        <p class="mt-2 text-yellow-50">{{ f.answer }}</p>
+      </div>
+    </div>
+  </div>
+</section>
